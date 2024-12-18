@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="display-4">Página no encontrada</h1>
+    <p class="lead">Lo sentimos, pero la página que estás buscando no existe.</p>
+    <img src="{% static 'images/404_image.png' %}" alt="Página no encontrada" class="img-fluid my-4">
+    <a href="{% url 'Home' %}" class="btn btn-primary">Volver al Inicio</a>
+</div>
+{% endblock %}

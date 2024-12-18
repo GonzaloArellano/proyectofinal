@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .navbar {
+            background-color: #B0C4DE;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #a0a0a0; /* Borde para distinguir del sidebar */
+        }
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            background-color: #343a40;
+            padding: 15px;
+            color: white;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            overflow-y: auto;
+            text-align: center;
+            border-right: 2px solid #a0a0a0;
+        }        
+        .sidebar h4 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        .sidebar .nav-link {
+            color: white;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #495057;
+        }
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+            margin-top: 56px;
+            margin-left: 250px;
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .navbar .nav-item form,
+        .navbar .nav-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar .nav-item .btn {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .nav-item .btn i {
+            margin-right: 5px; /* Espacio entre el ícono y el texto */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="btn btn-dark mr-2" href="{% url 'Home' %}">
+            <i class="bi bi-house-door"></i> Inicio
+        </a>        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if request.COOKIES.Rut %}
+                    <li class="nav-item">
+                        <a class="btn btn-dark" href="{% url 'PerfilTrabajador' request.COOKIES.Rut %}">
+                            <i class="bi bi-person-circle"></i> Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'Logout' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-dark" type="submit">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-dark" href="{% url 'Login' %}"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4>Menú</h4>
+        <ul class="nav flex-column">
+            {% if request.COOKIES.Rut %}
+                    {% if trabajador.Cargo.id != 3 %}
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#submenu1" role="button" aria-expanded="false" aria-controls="submenu1">
+                                <i class="bi bi-people"></i> Gestión de Trabajadores
+                            </a>
+                            <div class="collapse" id="submenu1">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'RegistrarTrabajador' %}">Agregar Trabajador</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'ListaTrabajadores' %}">Listar Trabajadores</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#submenu2" role="button" aria-expanded="false" aria-controls="submenu2">
+                                <i class="bi bi-calendar-check"></i> Permisos
+                            </a>
+                            <div class="collapse" id="submenu2">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'CrearPermiso' %}">Solicitar Permiso</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'ListarPermisosPropios' %}">Ver Mis Permisos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'ListaPermisos' %}">Permisos de Empleados</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'ListarPermisosPropios' %}">
+                                <i class="bi bi-calendar-check"></i> Mis Permisos
+                            </a>
+                        </li>
+                    {% endif %}
+            {% else %}
+                <li class="nav-item">
+                    <span class="nav-link text-white-50">Las opciones se habilitarán tras iniciar sesión</span>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

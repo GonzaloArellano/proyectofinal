@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>¡Solicitud Enviada!</h2>
+    <p>Se ha enviado su solicitud de permiso correctamente.</p>
+    <a href="{% url 'PerfilTrabajador' request.COOKIES.Rut %}" class="btn btn-primary mt-3">Volver al Perfil</a>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Opciones de Liquidación para {{ trabajador.Nombre }} {{ trabajador.Apellido }}</h2>
+    <p class="mb-4">Seleccione una opción:</p>
+    <div class="d-flex justify-content-center">
+        <div class="btn-group" role="group" aria-label="Opciones de Liquidación">
+            <a href="{% url 'ListarLiquidaciones' trabajador.Rut %}" class="btn btn-info btn-lg mr-3">Ver Historial de Liquidaciones</a>
+            <a href="{% url 'CalcularLiquidaciones' trabajador.Rut %}" class="btn btn-primary btn-lg">Generar Nueva Liquidación</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

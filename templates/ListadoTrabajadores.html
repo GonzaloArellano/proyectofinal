@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Listado de Trabajadores</h2>
+    <form method="get" class="form-inline mb-3">
+        <div class="form-group mr-2">
+            <label for="OpcionBusqueda" class="mr-2">Buscar por:</label>
+            <select name="OpcionBusqueda" id="OpcionBusqueda" class="form-control">
+                <option value="">Seleccione</option>
+                <option value="Nombre" {% if Filtro == "Nombre" %}selected{% endif %}>Nombre</option>
+                <option value="Rut" {% if Filtro == "Rut" %}selected{% endif %}>RUT</option>
+                <option value="Cargo" {% if Filtro == "Cargo" %}selected{% endif %}>Cargo</option>
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <input type="text" name="Valor" class="form-control" placeholder="Valor" value="{{ ValorFiltro }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>RUT</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Cargo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trabajador in trabajadores %}
+                <tr>
+                    <td>{{ trabajador.Nombre }}</td>
+                    <td>{{ trabajador.Apellido }}</td>
+                    <td>{{ trabajador.Rut }}</td>
+                    <td>{{ trabajador.Correo }}</td>
+                    <td>{{ trabajador.Telefono }}</td>
+                    <td>{{ trabajador.Cargo.Nombre }}</td>
+                    <td>
+                        <a href="{% url 'ActualizarInfoTrabajador' trabajador.Rut %}" class="btn btn-warning btn-sm">Actualizar</a>
+                        <a href="{% url 'EliminarTrabajador' trabajador.Rut %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="{% url 'LiquidacionOpcion' trabajador.Rut %}" class="btn btn-info btn-sm">Liquidaciones</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

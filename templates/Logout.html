@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_Rut">RUT:</label>
+            {{ form.Rut }}
+        </div>
+        <div class="form-group">
+            <label for="id_Contraseña">Contraseña:</label>
+            {{ form.Contraseña }}
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
+    {% if form.errors %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

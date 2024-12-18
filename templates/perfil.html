@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="perfil-container">
+    <h2>Perfil de {{ Trabajador.Nombre }} {{ Trabajador.Apellido }}</h2>
+    <div class="perfil-info">
+        <img src="{{ Trabajador.Imagen.url }}" alt="Imagen de {{ Trabajador.Nombre }}" class="img-thumbnail">
+        <ul class="list-group mt-3">
+            <li class="list-group-item"><strong>RUT:</strong> {{ Trabajador.Rut }}</li>
+            <li class="list-group-item"><strong>Sexo:</strong> {{ Trabajador.Sexo }}</li>
+            <li class="list-group-item"><strong>Correo:</strong> {{ Trabajador.Correo }}</li>
+            <li class="list-group-item"><strong>Teléfono:</strong> {{ Trabajador.Telefono }}</li>
+            <li class="list-group-item"><strong>Dirección:</strong> {{ Trabajador.Direccion }}</li>
+            <li class="list-group-item"><strong>Salario:</strong> ${{ Trabajador.Salario }}</li>
+            <li class="list-group-item"><strong>Cargo:</strong> {{ Trabajador.Cargo }}</li>
+            <li class="list-group-item"><strong>AFP:</strong> {{ Trabajador.AFP }}</li>
+            <li class="list-group-item"><strong>Sistema de Salud:</strong> {{ Trabajador.Sistema_de_salud }}</li>
+            <li class="list-group-item"><strong>Fecha de Ingreso:</strong> {{ Trabajador.Fecha_ingreso }}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

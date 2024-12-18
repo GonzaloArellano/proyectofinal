@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Liquidaciones de {{ trabajador.Nombre }} {{ trabajador.Apellido }}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>RUT</th>
+                <th>Fecha de Emisión</th>
+                <th>Descuento por AFP</th>
+                <th>Descuento por Salud</th>
+                <th>Salario Bruto</th>
+                <th>Salario Líquido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for liquidacion in liquidaciones %}
+            <tr>
+                <td>{{ liquidacion.Trabajador.Nombre }}</td>
+                <td>{{ liquidacion.Trabajador.Apellido }}</td>
+                <td>{{ liquidacion.Trabajador.Rut }}</td>
+                <td>{{ liquidacion.Fecha }}</td>
+                <td>${{ liquidacion.Descuento_Afp }}</td>
+                <td>${{ liquidacion.Descuento_Salud }}</td>
+                <td>${{ liquidacion.Trabajador.Salario }}</td>
+                <td>${{ liquidacion.Sueldo_Liquido }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'ListaTrabajadores' %}" class="btn btn-primary mt-3">Volver a la Lista de Empleados</a>
+</div>
+{% endblock %}

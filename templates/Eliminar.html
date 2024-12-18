@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Eliminar Trabajador</h2>
+    <p>¿Está seguro de que desea eliminar al trabajador <strong>{{ trabajador.Nombre }} {{ trabajador.Apellido }}</strong> con RUT <strong>{{ trabajador.Rut }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="confirm" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'ListaTrabajadores' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<div class="container mt-5">
+    <p>Los datos del trabajador seran <strong>completamente eliminados</strong>, incluyendo su cuenta, liquidaciones, etc.</p>
+</div>
+{% endblock %}

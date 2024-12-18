@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Calcular Liquidación para {{ trabajador.Nombre }} {{ trabajador.Apellido }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_trabajador">Trabajador:</label>
+            <input type="text" class="form-control" id="id_trabajador" value="{{ trabajador.Nombre }} {{ trabajador.Apellido }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="id_afp">AFP:</label>
+            <input type="text" class="form-control" id="id_afp" value="{{ trabajador.AFP.Nombre }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="id_salud">Sistema de Salud:</label>
+            <input type="text" class="form-control" id="id_salud" value="{{ trabajador.Sistema_de_salud.Nombre }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="id_salario">Salario Bruto:</label>
+            <input type="text" class="form-control" id="id_salario" value="${{ trabajador.Salario }}" disabled>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmar Liquidación</button>
+    </form>
+    <a href="{% url 'ListaTrabajadores' %}" class="btn btn-secondary mt-3">Cancelar</a>
+</div>
+{% endblock %}

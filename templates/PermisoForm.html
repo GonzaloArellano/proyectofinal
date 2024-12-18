@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Solicitar Permiso</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_Cantidad_de_dias">Cantidad de días:</label>
+            <div class="input-group">
+                {{ form.Cantidad_de_dias }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_Fecha_de_inicio">Fecha de inicio:</label>
+            <div class="input-group">
+                {{ form.Fecha_de_inicio }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_Motivo">Motivo:</label>
+            <div class="input-group">
+                {{ form.Motivo }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Solicitar</button>
+    </form>
+    {% if form.errors %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if messages %}
+        <div class="alert alert-success mt-3">
+            Se ha enviado su solicitud correctamente!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

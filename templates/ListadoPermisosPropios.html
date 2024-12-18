@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Mis Permisos</h2>
+    <form method="get" class="form-inline mb-3">
+        <div class="form-group mr-2">
+            <label for="OpcionEstado" class="mr-2">Estado:</label>
+            <select name="OpcionEstado" id="OpcionEstado" class="form-control">
+                <option value="">Seleccione</option>
+                <option value="1" {% if Opcion == "1" %}selected{% endif %}>Aprobado</option>
+                <option value="2" {% if Opcion == "2" %}selected{% endif %}>Rechazado</option>
+                <option value="3" {% if Opcion == "3" %}selected{% endif %}>Pendiente</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cantidad de Días</th>
+                <th>Fecha de Inicio</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for permiso in permisos %}
+                <tr>
+                    <td>{{ permiso.Cantidad_de_dias }}</td>
+                    <td>{{ permiso.Fecha_de_inicio }}</td>
+                    <td>{{ permiso.Motivo }}</td>
+                    <td>{{ permiso.EstadoPermiso.Nombre }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Actualizar Trabajador</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_Nombre">Nombre:</label>
+            {{ form.Nombre }}
+        </div>
+        <div class="form-group">
+            <label for="id_Apellido">Apellido:</label>
+            {{ form.Apellido }}
+        </div>
+        <div class="form-group">
+            <label for="id_Sexo">Sexo:</label>
+            {{ form.Sexo }}
+        </div>
+        <div class="form-group">
+            <label for="id_Rut">RUT:</label>
+            {{ form.Rut }}
+        
+        <div class="form-group">
+            <label for="id_Contraseña">Contraseña:</label>
+            {{ form.Contraseña }}
+        </div>
+        <div class="form-group">
+            <label for="id_Correo">Correo:</label>
+            {{ form.Correo }}
+        </div>
+        <div class="form-group">
+            <label for="id_Telefono">Teléfono:</label>
+            {{ form.Telefono }}
+        </div>
+        <div class="form-group">
+            <label for="id_Cargo">Cargo:</label>
+            {{ form.Cargo }}
+        </div>
+        <div class="form-group">
+            <label for="id_Fecha_de_Ingreso">Fecha de Ingreso:</label>
+            {{ form.Fecha_de_Ingreso }}
+        </div>
+        <div class="form-group">
+            <label for="id_Direccion">Dirección:</label>
+            {{ form.Direccion }}
+        </div>
+        <div class="form-group">
+            <label for="id_Imagen">Imagen:</label>
+            {{ form.Imagen }}
+        </div>
+        <div class="form-group">
+            <label for="id_Salario">Salario:</label>
+            {{ form.Salario }}
+        </div>
+        <div class="form-group">
+            <label for="id_Afp">AFP:</label>
+            {{ form.Afp }}
+        </div>
+        <div class="form-group">
+            <label for="id_Sistema_de_salud">Sistema de Salud:</label>
+            {{ form.Sistema_de_salud }}
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+    </form>
+    {% if form.errors %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

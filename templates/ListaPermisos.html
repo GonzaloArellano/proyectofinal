@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Listado de Permisos</h2>
+    <form method="get" class="form-inline mb-3">
+        <div class="form-group mr-2">
+            <label for="OpcionBusqueda" class="mr-2">Buscar por:</label>
+            <select name="OpcionBusqueda" id="OpcionBusqueda" class="form-control">
+                <option value="">Seleccione</option>
+                <option value="Nombre" {% if Filtro == "Nombre" %}selected{% endif %}>Nombre</option>
+                <option value="Rut" {% if Filtro == "Rut" %}selected{% endif %}>RUT</option>
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <input type="text" name="Valor" class="form-control" placeholder="Ingresar búsqueda" value="{{ ValorFiltro }}">
+        </div>
+        <div class="form-group mr-2">
+            <label for="OpcionEstado" class="mr-2">Estado:</label>
+            <select name="OpcionEstado" id="OpcionEstado" class="form-control">
+                <option value="">Seleccione</option>
+                <option value="1" {% if Opcion == "1" %}selected{% endif %}>Aprobado</option>
+                <option value="2" {% if Opcion == "2" %}selected{% endif %}>Rechazado</option>
+                <option value="3" {% if Opcion == "3" %}selected{% endif %}>Pendiente</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>RUT</th>
+                <th>Cantidad de Días</th>
+                <th>Fecha de Inicio</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for permiso in Permisos %}
+                <tr>
+                    <td>{{ permiso.Trabajador.Nombre }}</td>
+                    <td>{{ permiso.Trabajador.Rut }}</td>
+                    <td>{{ permiso.Cantidad_de_dias }}</td>
+                    <td>{{ permiso.Fecha_de_inicio }}</td>
+                    <td>{{ permiso.Motivo }}</td>
+                    <td>{{ permiso.EstadoPermiso.Nombre }}</td>
+                    <td>
+                        {% if permiso.EstadoPermiso.Nombre == 'Pendiente' %}
+                            <div class="btn-group" role="group">
+                                <form method="post" action="{% url 'ValidarPermiso' permiso.id %}" onsubmit="return confirm('¿Estás seguro de aceptar este permiso?');">
+                                    {% csrf_token %}
+                                    <button type="submit" name="opcion" value="1" class="btn btn-success btn-sm">Aceptar</button>
+                                </form>
+                                <form method="post" action="{% url 'ValidarPermiso' permiso.id %}" onsubmit="return confirm('¿Estás seguro de rechazar este permiso?');">
+                                    {% csrf_token %}
+                                    <button type="submit" name="opcion" value="2" class="btn btn-danger btn-sm">Rechazar</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            No hay acción disponible
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
